@@ -8,15 +8,24 @@ class flicker_class():
 
     def flicker_down(self): 
 
-        key = "00000000000000000000000000000"
-        secret = "000000000000000000000"
+
+        f = open('../flickerkey.txt', 'r')
+        datalist = f.readlines()
+
+        print (datalist[0])
+        print (datalist[1])
+        
+        key = datalist[0].rstrip('\n')
+        secret = datalist[1].rstrip('\n')
         wait_time = 1
 
         # コマンドラインの引数の1番目の値を取得。以下の場合は[cat]を取得
         # python download.py cat 
         animalname = self.get_data
         savedir = "../"+animalname
-        os.makedirs(savedir)
+
+        if(os.path.isdir(savedir)==False):
+            os.makedirs(savedir)
 
         # format:受け取るデータ(jsonで受け取る）
         flickr = FlickrAPI(key, secret, format='parsed-json')
